@@ -2,18 +2,14 @@ module.exports = {
   apps: [
     {
       name: 'kaalimitti-backend',
-      script: './backend/server.js',
+      script: 'server.js',
+      cwd: '/var/www/kaalimitti/kaalimitti_complete/kaalimiti/backend',
       instances: 1,
       autorestart: true,
       watch: false,
       max_memory_restart: '512M',
-      env: {
-        NODE_ENV: 'production',
-        PORT: 5000,
-      },
-      error_file: './logs/err.log',
-      out_file: './logs/out.log',
-      log_file: './logs/combined.log',
+      error_file: '/var/www/kaalimitti/kaalimitti_complete/kaalimiti/logs/err.log',
+      out_file: '/var/www/kaalimitti/kaalimitti_complete/kaalimiti/logs/out.log',
       time: true,
     },
   ],

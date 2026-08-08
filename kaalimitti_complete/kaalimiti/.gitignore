@@ -1,0 +1,8 @@
+backend/.env
+backend/.env.save
+backend/node_modules/
+backend/nano.*.save
+fronted/node_modules/
+fronted/dist/
+logs/
+*.pem

@@ -107,9 +107,15 @@ export default function ProductDetail() {
             </div>
 
             <div className="action-row">
-              <button className="btn btn-primary" onClick={handleAddToCart}>Add to Cart</button>
-              <button className="btn btn-outline" onClick={() => { handleAddToCart(); navigate('/checkout') }}>Buy Now →</button>
-            </div>
+  {product.stock === 0 ? (
+    <button className="btn btn-primary" disabled style={{opacity:0.5, cursor:"not-allowed"}}>Out of Stock</button>
+  ) : (
+    <>
+      <button className="btn btn-primary" onClick={handleAddToCart}>Add to Cart</button>
+      <button className="btn btn-outline" onClick={() => { handleAddToCart(); navigate('/checkout') }}>Buy Now →</button>
+    </>
+  )}
+</div>
 
             <div className="detail-features">
               {(product.features?.length ? product.features : [

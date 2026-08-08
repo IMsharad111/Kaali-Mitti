@@ -18,8 +18,8 @@ const ProtectedAdmin = ({ children }) => {
 export default function App() {
   return (
     <>
-      <Navbar />
-      <CartSidebar />
+      {!window.location.pathname.startsWith('/admin') && <Navbar />}
+      {!window.location.pathname.startsWith('/admin') && <CartSidebar />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product/:slug" element={<ProductDetail />} />

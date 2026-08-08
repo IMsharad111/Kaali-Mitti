@@ -208,7 +208,7 @@ nav {
 .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
 .form-group.full { grid-column: 1 / -1; }
 label.field-label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-light); }
-input[type=text], input[type=email], input[type=tel], input[type=password], select, textarea { width: 100%; padding: 12px 14px; border: 1px solid rgba(160,82,45,0.25); border-radius: 2px; background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text); outline: none; transition: border-color 0.2s; }
+input[type=text], input[type=email], input[type=tel], input[type=password], input[type=number], input[type=search], select, textarea { width: 100%; padding: 12px 14px; border: 1px solid rgba(160,82,45,0.25); border-radius: 2px; background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text); outline: none; transition: border-color 0.2s; }
 input:focus, select:focus, textarea:focus { border-color: var(--clay-warm); }
 .step-tabs { display: flex; margin-bottom: 40px; border: 1px solid rgba(160,82,45,0.2); border-radius: 2px; overflow: hidden; }
 .step-tab { flex: 1; padding: 12px; text-align: center; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; background: transparent; border: none; font-family: inherit; color: var(--text-light); border-right: 1px solid rgba(160,82,45,0.2); transition: all 0.2s; }

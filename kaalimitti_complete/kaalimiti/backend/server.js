@@ -9,6 +9,7 @@ const productRoutes = require('./routes/products');
 const orderRoutes   = require('./routes/orders');
 const uploadRoutes  = require('./routes/upload');
 const paymentRoutes = require('./routes/payment');
+const contentRoutes = require('./routes/content');
 
 const app = express();
 
@@ -29,11 +30,12 @@ app.use('/api/products', productRoutes);
 app.use('/api/orders',   orderRoutes);
 app.use('/api/upload',   uploadRoutes);
 app.use('/api/payment',  paymentRoutes);
+app.use('/api/content',  contentRoutes);
 
 // ── Serve React build in production ─────────────────────────────────────────
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../fronted/dist')));
-  app.get('*', (req, res) => {
+  app.get('/{*path}', (req, res) => {
     res.sendFile(path.join(__dirname, '../fronted/dist/index.html'));
   });
 }
