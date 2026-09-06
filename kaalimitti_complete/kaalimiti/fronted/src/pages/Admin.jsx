@@ -97,6 +97,16 @@ export default function Admin() {
     } catch { showToast('Upload failed') }
   }
 
+  const removeProductImage = async (idx) => {
+    const newImages = activeProduct.images.filter((_, i) => i !== idx)
+    try {
+      const { data: updated } = await api.put(`/products/${activeProduct._id}`, { images: newImages })
+      setProducts(ps => ps.map(p => p._id === updated._id ? updated : p))
+      setActiveProduct(updated)
+      showToast('Image removed!')
+    } catch { showToast('Failed to remove image') }
+  }
+
   const uploadContentImage = async (e, key) => {
     const file = e.target.files?.[0]
     if (!file) return
@@ -116,7 +126,6 @@ export default function Admin() {
       setContent(c => ({ ...c, [key]: newValue }))
       showToast('Image uploaded!')
     } catch { showToast('Upload failed') }
-    finally { setUploadingKey('') }
   }
 
   const removeHeroImage = async (idx) => {
@@ -265,8 +274,9 @@ export default function Admin() {
                 {!isAdding && activeProduct?.images?.length > 0 && (
                   <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 16 }}>
                     {activeProduct.images.map((img, i) => (
-                      <div key={i} style={{ width: 80, height: 80, borderRadius: 4, overflow: 'hidden', border: '1px solid rgba(160,82,45,0.2)' }}>
-                        <img src={img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      <div key={i} style={{ position: 'relative', width: 80, height: 80 }}>
+                        <img src={img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 4, border: '1px solid rgba(160,82,45,0.2)' }} />
+                        <button onClick={() => removeProductImage(i)} style={{ position: 'absolute', top: -6, right: -6, width: 20, height: 20, borderRadius: '50%', background: '#2C1810', color: 'white', border: 'none', cursor: 'pointer', fontSize: 14, display: 'flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}>×</button>
                       </div>
                     ))}
                   </div>
