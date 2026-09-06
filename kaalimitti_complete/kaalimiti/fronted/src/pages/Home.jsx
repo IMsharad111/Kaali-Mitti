@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useNavigate } from 'react-router-dom'
 import api from '../api/axios'
 import { useCart } from '../context/CartContext'
@@ -16,6 +18,72 @@ export default function Home() {
     api.get('/products').then((r) => setProducts(r.data)).catch(() => {})
     api.get('/content').then((r) => setContent(r.data)).catch(() => {})
   }, [])
+
+  gsap.registerPlugin(ScrollTrigger)
+
+  useEffect(() => {
+    // Fade in sections on scroll
+    gsap.utils.toArray('.section, .ingredients-section, .process-section, .cert-section').forEach(section => {
+      gsap.fromTo(section, 
+        { opacity: 0, y: 60 },
+        { opacity: 1, y: 0, duration: 1, ease: 'power2.out',
+          scrollTrigger: { trigger: section, start: 'top 80%', toggleActions: 'play none none none' }
+        }
+      )
+    })
+
+    // Stagger product cards
+    gsap.fromTo('.product-card',
+      { opacity: 0, y: 40, scale: 0.95 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.8, stagger: 0.2, ease: 'power2.out',
+        scrollTrigger: { trigger: '.products-grid', start: 'top 75%' }
+      }
+    )
+
+    // Stagger info cards
+    gsap.fromTo('.info-card',
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.7, stagger: 0.15, ease: 'power2.out',
+        scrollTrigger: { trigger: '.info-grid', start: 'top 75%' }
+      }
+    )
+
+    // Stagger process steps
+    gsap.fromTo('.process-step',
+      { opacity: 0, x: -30 },
+      { opacity: 1, x: 0, duration: 0.7, stagger: 0.2, ease: 'power2.out',
+        scrollTrigger: { trigger: '.process-grid', start: 'top 75%' }
+      }
+    )
+
+    // Counter animation
+    const counters = document.querySelectorAll('.benefit-num')
+    counters.forEach(counter => {
+      const text = counter.textContent
+      if (text.includes('%')) {
+        gsap.fromTo(counter, { innerText: 0 }, {
+          innerText: 98, duration: 2, ease: 'power2.out', snap: { innerText: 1 },
+          scrollTrigger: { trigger: counter, start: 'top 80%' },
+          onUpdate: function() { counter.textContent = Math.round(this.targets()[0].innerText) + '%' }
+        })
+      } else if (text.includes('x')) {
+        gsap.fromTo(counter, { innerText: 0 }, {
+          innerText: 3, duration: 2, ease: 'power2.out',
+          scrollTrigger: { trigger: counter, start: 'top 80%' },
+          onUpdate: function() { counter.textContent = Math.round(this.targets()[0].innerText) + 'x' }
+        })
+      }
+    })
+
+    // Hero parallax
+    gsap.to('.hero-right', {
+      yPercent: -20,
+      ease: 'none',
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+    })
+
+    return () => ScrollTrigger.getAll().forEach(t => t.kill())
+  }, [products, content])
 
   const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
 
