@@ -58,7 +58,7 @@ export default function Home() {
         </div>
         <div className="hero-right">
           <div className="hero-bg-pattern" />
-          <div className="hero-img-grid">
+          <div className="hero-img-grid" style={{ gridTemplateColumns: heroImages.length === 1 ? '1fr' : '1fr 1fr', gridTemplateRows: heroImages.length <= 2 ? '1fr' : '1fr 1fr' }}>
             {heroImages.length > 0 ? (
               heroImages.map((img, i) => (
                 <div className="hero-img-cell" key={i}>
